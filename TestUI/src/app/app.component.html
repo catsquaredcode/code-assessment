@@ -1,14 +1,33 @@
 <div class="container">
+  <div class="title row text-center">
+    <h1>{{ title }}</h1>
+  </div>
   <div class="row">
-    <div class="col-6 offset-3" *ngFor="let weather of weatherData">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{weather.date}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF}} &#176;F </h6>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC}} &#176;C</h6>
-          <p class="card-text">{{weather.summary}}</p>
+    <div *ngIf="weatherData.length > 0; else no_data">
+      <div
+        class="col-6 offset-3 weather-card"
+        *ngFor="let weather of weatherData"
+      >
+        <div class="card mb-1">
+          <div class="card-body">
+            <h5 class="card-title">{{ weather.date | date }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ weather.temperatureF }} &#176;F
+            </h6>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ weather.temperatureC }} &#176;C
+            </h6>
+            <p class="card-text summary" [ngClass]="setColor(weather.summary)">
+              {{ weather.summary }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
+    <ng-template #no_data>
+      <div class="row text-center">
+        <h2>No data to show</h2>
+      </div>
+    </ng-template>
   </div>
 </div>

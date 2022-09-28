@@ -1,3 +1,21 @@
 .card {
   top: 1rem;
+
+  .summary {
+    &.cyan {
+      color: cyan;
+    }
+
+    &.green {
+      color: green;
+    }
+
+    &.orange {
+      color: orange;
+    }
+
+    &.red {
+      color: red;
+    }
+  }
 }
