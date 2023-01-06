@@ -1,3 +1,38 @@
 .card {
   top: 1rem;
 }
+
+.card-text.Freezing > span,
+.card-text.Bracing > span,
+.card-text.Chilly > span{
+  color: cyan;
+}
+
+.card-text.Mild > span,
+.card-text.Balmy > span,
+.card-text.Cool > span{
+  color: green;
+}
+
+.card-text.Warm > span,
+.card-text.Hot > span{
+  color: orange;
+}
+
+.card-text.Sweltering > span,
+.card-text.Scorching > span{
+  color: red;
+}
+
+.temperature{
+  width: auto;
+}
+
+.card{
+  margin-bottom: 20px;
+}
+
+span.content {
+  margin: 10px 0 0;
+  text-align: center;
+}

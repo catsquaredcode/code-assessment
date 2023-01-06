@@ -91,6 +91,11 @@ export class Client {
       })
     };
 
+    var test = this.http.request("get", url_, options_);
+    console.log("TESTING");
+    console.log(test);
+
+
     return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
       return this.processUnauthenticated(response_);
     })).pipe(_observableCatch((response_: any) => {
