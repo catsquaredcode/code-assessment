@@ -12,6 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApiUnitTests", "TestApiUnitTests\TestApiUnitTests.csproj", "{31AD2D47-CA80-4CCF-8A4F-1545F61E03EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9F616AE7-73AB-493C-B6DC-444C592D9C87} = {9F616AE7-73AB-493C-B6DC-444C592D9C87}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +33,10 @@ Global
 		{A720BF0D-868C-404E-9A87-410694A01C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A720BF0D-868C-404E-9A87-410694A01C6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A720BF0D-868C-404E-9A87-410694A01C6F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{31AD2D47-CA80-4CCF-8A4F-1545F61E03EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31AD2D47-CA80-4CCF-8A4F-1545F61E03EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31AD2D47-CA80-4CCF-8A4F-1545F61E03EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31AD2D47-CA80-4CCF-8A4F-1545F61E03EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
