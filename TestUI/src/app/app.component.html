@@ -1,12 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col-6 offset-3" *ngFor="let weather of weatherData">
+    <span class="content">TestUI app is running!</span>
+    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3" *ngFor="let weather of weatherData">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">{{weather.date}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF}} &#176;F </h6>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC}} &#176;C</h6>
-          <p class="card-text">{{weather.summary}}</p>
+        <h5 class="card-title">Forecast For: {{weather.date | date: 'MM/dd/yyyy'}}</h5>
+        <p class="card-text {{weather.summary}}">It's going to be <span>{{weather.summary}}</span></p>
+        <p class="card-text">The average temperatures will be: </p>
+        <div class="row">
+          <h6 class="card-subtitle mb-2 text-muted temperature">{{weather.temperatureF}} &#176;F </h6>
+          <h6 class="card-subtitle mb-2 text-muted temperature">{{weather.temperatureC}} &#176;C</h6>
         </div>
       </div>
     </div>
