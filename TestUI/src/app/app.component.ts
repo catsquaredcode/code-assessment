@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Client, WeatherForecast} from "./weatherapp.swagger";
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,6 +7,7 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
   providers: [Client]
 })
 export class AppComponent {
+  title: string = "TestUI";
   weatherData: WeatherForecast[] = [];
 
   constructor(
@@ -15,7 +15,6 @@ export class AppComponent {
   ) {
     this.getWeather();
   }
-
   /**
    * Get Current Weather
    *
@@ -32,7 +31,6 @@ export class AppComponent {
       }
     })
   }
-
 
   /**
    * Dummy Error Handler
