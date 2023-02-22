@@ -3,36 +3,29 @@
 //     Generated using the NSwag toolchain v13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v11.0.0.0)) (http://NSwag.org)
 // </auto-generated>
 //----------------------
-
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
-
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
-
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
-
 @Injectable()
 export class Client {
   private http: HttpClient;
   private baseUrl: string;
   protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
   constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
     this.http = http;
     this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
   }
-
   /**
    * @return Success
    */
   weatherForecast(): Observable<WeatherForecast[]> {
     let url_ = this.baseUrl + "/WeatherForecast";
     url_ = url_.replace(/[?&]$/, "");
-
     let options_ : any = {
       observe: "response",
       responseType: "blob",
@@ -40,7 +33,6 @@ export class Client {
         "Accept": "text/plain"
       })
     };
-
     return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
       return this.processWeatherForecast(response_);
     })).pipe(_observableCatch((response_: any) => {
@@ -54,13 +46,11 @@ export class Client {
         return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
     }));
   }
-
   protected processWeatherForecast(response: HttpResponseBase): Observable<WeatherForecast[]> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
         (response as any).error instanceof Blob ? (response as any).error : undefined;
-
     let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
     if (status === 200) {
       return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -75,14 +65,12 @@ export class Client {
     }
     return _observableOf(null as any);
   }
-
   /**
    * @return Success
    */
   unauthenticated(): Observable<WeatherForecast[]> {
     let url_ = this.baseUrl + "/WeatherForecast/unauthenticated";
     url_ = url_.replace(/[?&]$/, "");
-
     let options_ : any = {
       observe: "response",
       responseType: "blob",
@@ -90,6 +78,11 @@ export class Client {
         "Accept": "text/plain"
       })
     };
+
+    var test = this.http.request("get", url_, options_);
+    console.log("TESTING");
+    console.log(test);
+
 
     return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
       return this.processUnauthenticated(response_);
@@ -104,13 +97,11 @@ export class Client {
         return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
     }));
   }
-
   protected processUnauthenticated(response: HttpResponseBase): Observable<WeatherForecast[]> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse ? response.body :
         (response as any).error instanceof Blob ? (response as any).error : undefined;
-
     let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
     if (status === 200) {
       return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -126,45 +117,37 @@ export class Client {
     return _observableOf(null as any);
   }
 }
-
 export interface WeatherForecast {
   date?: Date;
   temperatureC?: number;
   readonly temperatureF?: number;
   summary?: string | undefined;
 }
-
 export class ApiException extends Error {
   override message: string;
   status: number;
   response: string;
   headers: { [key: string]: any; };
   result: any;
-
   constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
     super();
-
     this.message = message;
     this.status = status;
     this.response = response;
     this.headers = headers;
     this.result = result;
   }
-
   protected isApiException = true;
-
   static isApiException(obj: any): obj is ApiException {
     return obj.isApiException === true;
   }
 }
-
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
   if (result !== null && result !== undefined)
     return _observableThrow(result);
   else
     return _observableThrow(new ApiException(message, status, response, headers, null));
 }
-
 function blobToText(blob: any): Observable<string> {
   return new Observable<string>((observer: any) => {
     if (!blob) {
