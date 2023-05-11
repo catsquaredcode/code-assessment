@@ -1,14 +1,19 @@
-<div class="container">
-  <div class="row">
-    <div class="col-6 offset-3" *ngFor="let weather of weatherData">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{weather.date}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF}} &#176;F </h6>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC}} &#176;C</h6>
-          <p class="card-text">{{weather.summary}}</p>
+<section class="content">
+  <span class="h1">{{title}} app is running!</span>
+  <div class="container">
+    <div class="row">
+      <div class="col-6 offset-3" *ngFor="let weather of weatherData">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{weather.date | date:'fullDate'}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF}} &#176;F </h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC}} &#176;C</h6>
+            <p class="card-text"
+              [ngClass]="{'text-cyan': weather.summary === 'Chilly' || weather.summary === 'Bracing' || weather.summary === 'Freezing','text-orange': weather.summary === 'Warm' || weather.summary === 'Hot','text-success': weather.summary === 'Mild' || weather.summary === 'Balmy' || weather.summary === 'Cool','text-danger': weather.summary === 'Sweltering' || weather.summary === 'Scorching'}">
+              {{weather.summary}}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>

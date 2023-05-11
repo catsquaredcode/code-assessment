@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Client, WeatherForecast} from "./weatherapp.swagger";
+import { Component } from '@angular/core';
+import { Client, WeatherForecast } from "./weatherapp.swagger";
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,7 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 })
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
+  title = 'TestUI'
 
   constructor(
     private client: Client
@@ -23,7 +24,7 @@ export class AppComponent {
    */
   getWeather() {
     this.client.unauthenticated().subscribe({
-      complete: () => {},
+      complete: () => { },
       error: (error) => {
         this.handleError(error);
       },
