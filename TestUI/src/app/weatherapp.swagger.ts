@@ -132,6 +132,7 @@ export interface WeatherForecast {
   temperatureC?: number;
   readonly temperatureF?: number;
   summary?: string | undefined;
+  color?: string;
 }
 
 export class ApiException extends Error {

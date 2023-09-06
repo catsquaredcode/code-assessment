@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Client, WeatherForecast} from "./weatherapp.swagger";
 
 @Component({
@@ -7,12 +7,16 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
   styleUrls: ['./app.component.scss'],
   providers: [Client]
 })
-export class AppComponent {
-  weatherData: WeatherForecast[] = [];
+export class AppComponent implements OnInit {
+  public weatherData: WeatherForecast[] = [];
+  public title = 'TestUI';
 
   constructor(
-    private client: Client
+    public client: Client
   ) {
+  }
+
+  ngOnInit(): void {
     this.getWeather();
   }
 
@@ -28,9 +32,44 @@ export class AppComponent {
         this.handleError(error);
       },
       next: (data: WeatherForecast[]) => {
-        this.weatherData = data;
+        this.weatherData = this.getWeatherColorFormatted(data);
       }
     })
+  }
+
+  getWeatherColorFormatted(data: WeatherForecast[]): WeatherForecast[] {
+    data.forEach((wheather: WeatherForecast) => {
+      wheather.color = this.getWeatherColor(wheather.summary);
+    });
+    return data;
+  }
+
+  getWeatherColor(description: string | undefined): string {
+    let color: string;
+    switch(description) {
+      case 'Freezing':
+      case 'Bracing':
+      case 'Chilly':
+        color = 'Cyan';
+        break;
+      case 'Mild':
+      case 'Balmy':
+      case 'Cool':
+        color = 'Green';
+        break;
+      case 'Warm':
+      case 'Hot':
+        color = 'Orange';
+        break;
+      case 'Sweltering':
+      case 'Scorching':
+        color = 'Red';
+        break;
+      default:
+        color = 'black';
+        break;
+    }
+    return color;
   }
 
 
