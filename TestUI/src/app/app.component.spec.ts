@@ -37,15 +37,6 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      providers: [
-        { provide: Client, useValue:
-          {
-            unauthenticated: () => {
-              return of(dummyWeatherForecats);
-            }
-          }
-        }
-      ],
     }).compileComponents();
   });
 
@@ -68,29 +59,16 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('.container span')?.textContent).toContain('TestUI app is running!');
   });
 
-  it('should retrieve weather forecast data', done => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    spyOn(app.client, 'unauthenticated').and.returnValue(of(dummyWeatherForecats));
-    app.client.unauthenticated().subscribe((result: WeatherForecast[]) => {
-      expect(result).toBe(dummyWeatherForecats);
-      done();
-    });
-    app.getWeather();
-    expect(app.weatherData).toBeDefined();
+  it('should retrieve weather forecast data', () => {
+    let clientMock: jasmine.SpyObj<Client> = jasmine.createSpyObj('Client', { unauthenticated: of(dummyWeatherForecats) });
+    const app = new AppComponent(clientMock);
+    expect(app.weatherData).toEqual(dummyWeatherForecats);
   });
 
-  it('should retrieve weather forecast ERROR', done => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    spyOn(app.client, 'unauthenticated').and.returnValue(throwError(() => 'Error'));
-    app.client.unauthenticated().subscribe({
-      error: (e) => {
-        expect(e).toBeTruthy();
-        done();
-      }
-    });
-    app.getWeather();
+it('should retrieve weather forecast ERROR', () => {
+    let clientMock: jasmine.SpyObj<Client> = jasmine.createSpyObj('Client', { unauthenticated: throwError(() => 'Error') });
+    const app = new AppComponent(clientMock);
+    expect(clientMock.unauthenticated).toHaveBeenCalledTimes(1);
     expect(app.weatherData).toEqual([]);
   });
 

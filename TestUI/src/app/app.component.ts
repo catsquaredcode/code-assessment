@@ -14,7 +14,7 @@ export class AppComponent {
   public subtitle: string = 'TestUI app is running!'
 
   constructor(
-    public client: Client
+    private client: Client
   ) {
     this.getWeather();
   }
@@ -24,7 +24,7 @@ export class AppComponent {
    *
    * @description Gets current weather from API
    */
-  getWeather() {
+  private getWeather() {
     this.client.unauthenticated().subscribe({
       complete: () => {},
       error: (error) => {
@@ -52,7 +52,7 @@ export class AppComponent {
    * @description Get color according to description
    * @param weather
    */
-  getWeatherColor(weather: string | undefined): string {
+  public getWeatherColor(weather: string | undefined): string {
     return weather ? WEATHER_COLORS[weather.toUpperCase() as keyof typeof WEATHER_COLORS] : 'gray';
   }
 }
