@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Client, WeatherForecast} from "./weatherapp.swagger";
+import { WEATHER_COLORS } from './app.constants';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,9 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
   providers: [Client]
 })
 export class AppComponent {
-  weatherData: WeatherForecast[] = [];
+  public weatherData: WeatherForecast[] = [];
+  public title: string = 'TestUI'
+  public subtitle: string = 'TestUI app is running!'
 
   constructor(
     private client: Client
@@ -21,7 +24,7 @@ export class AppComponent {
    *
    * @description Gets current weather from API
    */
-  getWeather() {
+  private getWeather() {
     this.client.unauthenticated().subscribe({
       complete: () => {},
       error: (error) => {
@@ -33,14 +36,23 @@ export class AppComponent {
     })
   }
 
-
   /**
    * Dummy Error Handler
    *
    * @description throws error state
    * @param error
    */
-  handleError(error: string) {
+  private handleError(error: string) {
     alert(error);
+  }
+
+  /**
+   * Get color 
+   *
+   * @description Get color according to description
+   * @param weather
+   */
+  public getWeatherColor(weather: string | undefined): string {
+    return weather ? WEATHER_COLORS[weather.toUpperCase() as keyof typeof WEATHER_COLORS] : 'gray';
   }
 }
