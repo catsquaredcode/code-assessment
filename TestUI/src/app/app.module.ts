@@ -1,15 +1,14 @@
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { environment } from "../environments/environment";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {API_BASE_URL, Client} from "./weatherapp.swagger";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {environment} from "../environments/environment";
+import { API_BASE_URL, Client } from "./weatherapp.swagger";
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -18,7 +17,7 @@ import {environment} from "../environments/environment";
   providers: [
     Client,
     HttpClient,
-    {provide: API_BASE_URL, useValue: environment.url},
+    { provide: API_BASE_URL, useValue: environment.url },
   ],
   bootstrap: [AppComponent]
 })
