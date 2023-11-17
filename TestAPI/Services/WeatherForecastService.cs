@@ -21,6 +21,11 @@ namespace TestAPI.Services
 
         public async IAsyncEnumerable<WeatherForecast> GetAsync(int number, [EnumeratorCancellation] CancellationToken token)
         {
+            if (number < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(number));
+            }
+
             var startDate = DateTime.Today;
             var endDate = startDate + TimeSpan.FromDays(number);
             var forecasts = await _weatherDatabase.Forecasts.Include(x => x.Summary).Where(x => x.Id >= startDate && x.Id < endDate).ToDictionaryAsync(x => x.Id, token);

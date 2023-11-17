@@ -12,26 +12,24 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TestAPI;
 using TestAPI.Database;
-using TestAPI.Models;
 using TestAPI.Services;
 using Xunit;
 
 namespace TestApi.Tests
 {
-    public class WeatherControllerTests : IAsyncLifetime
+    public class WeatherForecastTests : IAsyncLifetime
     {
         private IWeatherForecastService _weatherForecastService;
         private IWeatherDatabase _weatherDatabase;
         private HttpClient _client;
 
-        public WeatherControllerTests()
+        public WeatherForecastTests()
         {
         }
 
@@ -101,14 +99,14 @@ namespace TestApi.Tests
 
         }
 
-        [Fact]
-        public async void HttpContent_ShouldNotBe_Empty_WithDefault()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(int.MinValue)]
+        public async void Exception_ShouldBe_Throw_With_ZeroOrNegativeDays(int days)
         {
-            var defaultDays = 5;
-            var result = await _client.GetAsync("WeatherForecast/unauthenticated");
-            var forecasts = await result.Content.ReadFromJsonAsync<IEnumerable<WeatherForecast>>();
-            Assert.Equal(defaultDays, forecasts.Count());
-
+            var source = new CancellationTokenSource();
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _weatherForecastService.GetAsync(days, source.Token).ToListAsync(source.Token));
         }
 
         private string BuildToken(DateTime expirationDate)
