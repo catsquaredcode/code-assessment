@@ -8,8 +8,11 @@ namespace TestAPI.Database
     public WeatherDatabase(DbContextOptions<WeatherDatabase> options) : base(options)
     {
     }
-
-    public virtual DbSet<Summary> Summaries { get; set; }
+        public static string ConnectionString
+        {
+            get { return "Data Source=SPOPYPC;Initial Catalog=Weather;Integrated Security=True;"; }
+        }
+        public virtual DbSet<Summary> Summaries { get; set; }
 
     public virtual DbSet<Forecast> Forecasts { get; set; }
 
