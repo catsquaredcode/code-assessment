@@ -9,6 +9,25 @@
 );
 
 GO
+
+ALTER TABLE [dbo].[case]
+   ADD CONSTRAINT FK_case_pallet FOREIGN KEY ([palletguid])
+      REFERENCES [dbo].[pallet] ([guid])
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+;
+
+GO
+
+ALTER TABLE [dbo].[case]
+   ADD CONSTRAINT FK_case_product FOREIGN KEY ([productguid])
+      REFERENCES [dbo].[product] ([guid])
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+;
+
+GO
+
 CREATE TRIGGER [dbo].[trg_case_modifieddate]
     ON [dbo].[case]
     AFTER UPDATE

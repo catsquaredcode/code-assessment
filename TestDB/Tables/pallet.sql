@@ -7,6 +7,11 @@
 );
 
 GO
+
+ALTER TABLE [dbo].[pallet]   
+ADD CONSTRAINT PL_guid UNIQUE ([guid]);   
+
+GO
 CREATE TRIGGER [dbo].[trg_pallet_modifieddate]
     ON [dbo].[pallet]
     AFTER UPDATE
