@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using TestAPI.Database;
 using TestAPI.Services;
 
@@ -31,6 +33,10 @@ namespace TestAPI
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
       {
+        //I need to specify the signing key inorder to generate a token for the integration tests
+        var key = Encoding.UTF8.GetBytes(Configuration["JWT:Key"]);
+        options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(key);
+
         options.TokenValidationParameters ??= new TokenValidationParameters();
         options.TokenValidationParameters.ValidIssuer = Configuration["JWT:Issuer"];
         options.TokenValidationParameters.ValidateAudience = false;

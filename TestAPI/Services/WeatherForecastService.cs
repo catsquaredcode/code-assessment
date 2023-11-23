@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.EntityFrameworkCore;
 using TestAPI.Database;
 using TestAPI.Models;
 
@@ -23,17 +22,21 @@ namespace TestAPI.Services
     {
       var startDate = DateTime.Today;
       var endDate = startDate + TimeSpan.FromDays(number);
-      var forecasts = await _weatherDatabase.Forecasts.Include(x => x.Summary).Where(x => x.Id >= startDate && x.Id < endDate).ToDictionaryAsync(x => x.Id, token);
+
+      //replaced by the repository method
+      var forecasts = await _weatherDatabase.GetForecastsAsync(startDate, endDate, token);
       var dirty = false;
-      List<Summary> summaries = null;
+      IEnumerable<Summary> summaries = null;
 
       for (var currentDate = startDate; currentDate < endDate; currentDate += TimeSpan.FromDays(1))
       {
         if (!forecasts.TryGetValue(currentDate, out var forecast))
         {
-          summaries ??= await _weatherDatabase.Summaries.AsQueryable().ToListAsync(token);
+          //replaced by the repository method
+          summaries ??= await _weatherDatabase.GetSummariesAsync(token);
           var celsius = _rng.Next(-20, 55);
-          var summary = summaries.Single(s => (!s.CelsiusLow.HasValue || celsius >= s.CelsiusLow.Value) && (!s.CelsiusHigh.HasValue || celsius < s.CelsiusHigh.Value));
+          //moved this logic to a public method in order to add a unit test on it
+          var summary = GetSummary(summaries, celsius);
 
           forecast = new Forecast
           {
@@ -43,7 +46,8 @@ namespace TestAPI.Services
             Summary = summary
           };
 
-          _weatherDatabase.Forecasts.Add(forecast);
+          //replaced by the repository method
+          _weatherDatabase.AddForecast(forecast);
           dirty = true;
         }
 
@@ -59,6 +63,11 @@ namespace TestAPI.Services
       {
         await _weatherDatabase.SaveChangesAsync(token);
       }
+    }
+
+    public Summary GetSummary(IEnumerable<Summary> summaries, int celsius)
+    {
+       return summaries.Single(s => (!s.CelsiusLow.HasValue || celsius >= s.CelsiusLow.Value) && (!s.CelsiusHigh.HasValue || celsius < s.CelsiusHigh.Value));
     }
   }
 }

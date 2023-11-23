@@ -9,6 +9,21 @@
 );
 
 GO
+
+ALTER TABLE [dbo].[product]   
+ADD CONSTRAINT PR_guid UNIQUE ([guid]);   
+
+GO
+
+ALTER TABLE [dbo].[product]
+   ADD CONSTRAINT FK_product_categories FOREIGN KEY ([productcategoryguid])
+      REFERENCES [dbo].[productcategory] ([guid])
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+;
+
+GO
+
 CREATE TRIGGER [dbo].[trg_product_modifieddate]
     ON [dbo].[product]
     AFTER UPDATE

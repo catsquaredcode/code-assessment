@@ -8,6 +8,11 @@
 );
 
 GO
+
+ALTER TABLE [dbo].[productcategory]   
+ADD CONSTRAINT PC_guid UNIQUE ([guid]);   
+
+GO
 CREATE TRIGGER [dbo].[trg_productcategory_modifieddate]
     ON [dbo].[productcategory]
     AFTER UPDATE
