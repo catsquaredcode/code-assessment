@@ -9,11 +9,13 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 })
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
+  title: String;
 
   constructor(
     private client: Client
   ) {
     this.getWeather();
+    this.title = "TestUI";
   }
 
   /**
@@ -32,7 +34,6 @@ export class AppComponent {
       }
     })
   }
-
 
   /**
    * Dummy Error Handler

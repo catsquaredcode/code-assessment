@@ -1,12 +1,25 @@
 <div class="container">
   <div class="row">
+    <div class="col-6 offset-3">
+      <h1 class="content">
+        <span>{{title}} app is running!</span>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-6 offset-3" *ngFor="let weather of weatherData">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">{{weather.date}}</h5>
+          <h5 class="card-title">{{weather.date | date: 'shortDate'}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF}} &#176;F </h6>
           <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC}} &#176;C</h6>
-          <p class="card-text">{{weather.summary}}</p>
+          <p class="card-text" 
+            [class.temperature-min]="weather.temperatureC && weather.temperatureC < 10"
+            [class.temperature-mid-low]="weather.temperatureC && weather.temperatureC >= 10 && weather.temperatureC < 25"
+            [class.temperature-mid-hight]="weather.temperatureC && weather.temperatureC >= 25 && weather.temperatureC < 35"
+            [class.temperature-max]="weather.temperatureC && weather.temperatureC >= 35"
+          
+            >{{weather.summary}}</p>
         </div>
       </div>
     </div>
