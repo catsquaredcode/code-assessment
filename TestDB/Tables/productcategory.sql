@@ -6,8 +6,8 @@
     [name]         NVARCHAR(50) NOT NULL
     CONSTRAINT [PK_productcategory] PRIMARY KEY CLUSTERED ([serial] ASC)
 );
-
 GO
+
 CREATE TRIGGER [dbo].[trg_productcategory_modifieddate]
     ON [dbo].[productcategory]
     AFTER UPDATE
@@ -26,3 +26,11 @@ CREATE TRIGGER [dbo].[trg_productcategory_modifieddate]
 END
 
 
+GO
+
+CREATE NONCLUSTERED INDEX [IX_productcategory_guid] ON [dbo].[productcategory]
+(
+	[guid] ASC
+)
+INCLUDE([serial]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO

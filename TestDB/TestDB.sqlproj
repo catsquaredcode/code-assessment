@@ -60,6 +60,7 @@
     <Folder Include="Stored Procedures" />
     <Folder Include="Data" />
     <Folder Include="Instructions" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\pallet.sql" />
@@ -67,6 +68,7 @@
     <Build Include="Tables\product.sql" />
     <Build Include="Tables\productcategory.sql" />
     <Build Include="Stored Procedures\usp_movecase.sql" />
+    <Build Include="Views\CasesView.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Data\SeedData.sql" />

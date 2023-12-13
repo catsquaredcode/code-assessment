@@ -7,8 +7,8 @@
     [productcategoryguid] UNIQUEIDENTIFIER NOT NULL
     CONSTRAINT [PK_product] PRIMARY KEY CLUSTERED ([serial] ASC)
 );
-
 GO
+
 CREATE TRIGGER [dbo].[trg_product_modifieddate]
     ON [dbo].[product]
     AFTER UPDATE
@@ -25,5 +25,12 @@ CREATE TRIGGER [dbo].[trg_product_modifieddate]
 			   inserted T2 ON T1.[serial] = T2.[serial]
 	  END
 END
+GO
 
+CREATE NONCLUSTERED INDEX [IX_product_guid] ON [dbo].[product]
+(
+	[guid] ASC
+)
+INCLUDE([productcategoryguid]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 
