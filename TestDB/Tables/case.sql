@@ -9,6 +9,7 @@
 );
 
 GO
+
 CREATE TRIGGER [dbo].[trg_case_modifieddate]
     ON [dbo].[case]
     AFTER UPDATE
@@ -25,5 +26,12 @@ CREATE TRIGGER [dbo].[trg_case_modifieddate]
 			   inserted T2 ON T1.[serial] = T2.[serial]
 	  END
 END
+GO
 
+CREATE NONCLUSTERED INDEX [IX_case_guid] ON [dbo].[case]
+(
+	[guid] ASC
+)
+INCLUDE([serial],[palletguid],[productguid]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 
