@@ -15,4 +15,8 @@
     <PackageReference Include="System.Linq.Async" Version="5.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+
 </Project>
