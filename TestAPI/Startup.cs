@@ -24,7 +24,7 @@ namespace TestAPI
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<WeatherDatabase>(options => options.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Weather;Integrated Security=True;"));
+      services.AddDbContext<WeatherDatabase>(options => options.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=Weather;Integrated Security=True;"));
       services.AddScoped<IWeatherDatabase>(sp => sp.GetRequiredService<WeatherDatabase>());
       services.AddControllers();
       services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "TestAPI", Version = "v1"}); });
