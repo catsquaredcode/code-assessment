@@ -26,16 +26,11 @@ export class Client {
     this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
   }
 
-  getBaseUrl():string{
-
-    return this.baseUrl;
-  }
-
   /**
    * @return Success
    */
   weatherForecast(): Observable<WeatherForecast[]> {
-    let url_ = this.baseUrl + "/WeatherForecast/unauthenticated/?days=1"; // this.baseUrl + "/WeatherForecast";
+    let url_ = this.baseUrl + "/WeatherForecast";
     url_ = url_.replace(/[?&]$/, "");
 
     let options_ : any = {
@@ -85,7 +80,7 @@ export class Client {
    * @return Success
    */
   unauthenticated(): Observable<WeatherForecast[]> {
-    let url_ = this.baseUrl + "/WeatherForecast/unauthenticated/?days=1";
+    let url_ = this.baseUrl + "/WeatherForecast/unauthenticated";
     url_ = url_.replace(/[?&]$/, "");
 
     let options_ : any = {

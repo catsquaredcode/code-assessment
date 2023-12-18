@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {Client, WeatherForecast} from "./weatherapp.swagger";
 
-//import { DatePipe, formatDate } from '@angular/common';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,8 +9,6 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 })
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
-
-  title: string =  "TestUI";
 
   constructor(
     private client: Client
@@ -31,40 +27,12 @@ export class AppComponent {
       error: (error) => {
         this.handleError(error);
       },
-      next: 
-      (data: WeatherForecast[]) => {
-             this.weatherData = data;
-
+      next: (data: WeatherForecast[]) => {
+        this.weatherData = data;
       }
     })
   }
-  
- 
 
-  getColor(summary: any){
-
-     switch(summary){
-          case "Freezing":
-          case "Bracing":
-          case "Chilly":
-            return "cyan";
-          case "Mild":
-          case "Balmy":
-          case "Cool":
-            return "green";
-          case "Warm":
-          case "Hot":
-            return "orange";
-          case "Sweltering":
-          case "Scorching":
-            return "red";
-          default:
-            return "black";
-
-     }
-
-
-  }
 
   /**
    * Dummy Error Handler
