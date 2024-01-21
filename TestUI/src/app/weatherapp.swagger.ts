@@ -80,7 +80,7 @@ export class Client {
    * @return Success
    */
   unauthenticated(): Observable<WeatherForecast[]> {
-    let url_ = this.baseUrl + "/WeatherForecast/unauthenticated";
+    let url_ = this.baseUrl + "/WeatherForecast/unauthenticated?days=8";
     url_ = url_.replace(/[?&]$/, "");
 
     let options_ : any = {

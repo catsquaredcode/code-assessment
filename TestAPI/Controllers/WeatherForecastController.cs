@@ -14,14 +14,25 @@ namespace TestAPI.Controllers
   [Route("[controller]")]
   public class WeatherForecastController : ControllerBase
   {
+    #region Fields
+
     private readonly ILogger<WeatherForecastController> _logger;
+
     private readonly IWeatherForecastService _weatherForecastService;
+
+    #endregion
+
+    #region Public Constructors
 
     public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastService weatherForecastService)
     {
       _logger = logger;
       _weatherForecastService = weatherForecastService;
     }
+
+    #endregion
+
+    #region Public Methods
 
     [HttpGet]
     [Authorize]
@@ -37,5 +48,7 @@ namespace TestAPI.Controllers
       using var loggingScope = _logger.BeginScope($"{nameof(WeatherForecastController)}.{nameof(GetUnauthenticatedAsync)}");
       return await _weatherForecastService.GetAsync(days, token).ToListAsync(token);
     }
+
+    #endregion
   }
 }

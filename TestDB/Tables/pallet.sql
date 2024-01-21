@@ -23,5 +23,8 @@ CREATE TRIGGER [dbo].[trg_pallet_modifieddate]
 			   inserted T2 ON T1.[serial] = T2.[serial]
 	  END
 END
+GO
 
 
+create nonclustered index [IX_pallet_guid] on pallet ([guid]) 
+GO

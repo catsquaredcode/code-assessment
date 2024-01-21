@@ -27,3 +27,7 @@ CREATE TRIGGER [dbo].[trg_product_modifieddate]
 END
 
 
+
+GO
+
+create nonclustered index [IX_product_guid] ON [dbo].[product] ([guid]) include (productcategoryguid)

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Client, WeatherForecast} from "./weatherapp.swagger";
+//import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,11 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 })
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
-
+  title: string;
   constructor(
     private client: Client
   ) {
+    this.title = 'TestUI';
     this.getWeather();
   }
 
@@ -32,7 +34,6 @@ export class AppComponent {
       }
     })
   }
-
 
   /**
    * Dummy Error Handler

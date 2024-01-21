@@ -7,9 +7,20 @@ namespace TestAPI.Database
 {
   public interface IWeatherDatabase
   {
-    DbSet<Summary> Summaries { get; set; }
+    #region Properties
+
     DbSet<Forecast> Forecasts { get; set; }
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+    DbSet<Summary> Summaries { get; set; }
+
+    #endregion
+
+    #region Public Methods
+
     void Migrate();
+
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+    #endregion
   }
 }

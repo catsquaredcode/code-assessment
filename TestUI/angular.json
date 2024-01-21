@@ -107,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "TestUI"
+  "defaultProject": "TestUI",
+  "cli": {
+    "analytics": "30501cf4-ec0c-405c-88a7-abf63c601306"
+  }
 }

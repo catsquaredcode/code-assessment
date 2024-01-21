@@ -7,6 +7,14 @@ namespace TestAPI
 {
   public class Program
   {
+    #region Public Methods
+
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+      return Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+    }
+
     public static void Main(string[] args)
     {
       var host = CreateHostBuilder(args).Build();
@@ -19,10 +27,6 @@ namespace TestAPI
       host.Run();
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-      return Host.CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-    }
+    #endregion
   }
 }

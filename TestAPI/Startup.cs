@@ -8,36 +8,29 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TestAPI.Database;
+using TestAPI.Repositories;
 using TestAPI.Services;
 
 namespace TestAPI
 {
   public class Startup
   {
+    #region Public Constructors
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
     }
 
+    #endregion
+
+    #region Properties
+
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.AddDbContext<WeatherDatabase>(options => options.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Weather;Integrated Security=True;"));
-      services.AddScoped<IWeatherDatabase>(sp => sp.GetRequiredService<WeatherDatabase>());
-      services.AddControllers();
-      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "TestAPI", Version = "v1"}); });
+    #endregion
 
-      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-      {
-        options.TokenValidationParameters ??= new TokenValidationParameters();
-        options.TokenValidationParameters.ValidIssuer = Configuration["JWT:Issuer"];
-        options.TokenValidationParameters.ValidateAudience = false;
-      });
-
-      services.AddTransient<IWeatherForecastService, WeatherForecastService>();
-    }
+    #region Public Methods
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -56,7 +49,7 @@ namespace TestAPI
       }
 
       app.UseHttpsRedirection();
-      
+
       app.UseRouting();
 
       app.UseAuthentication();
@@ -64,5 +57,27 @@ namespace TestAPI
 
       app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddDbContext<WeatherDatabase>(options => options.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Weather;Integrated Security=True;"));
+      services.AddScoped<IWeatherDatabase>(sp => sp.GetRequiredService<WeatherDatabase>());
+
+      services.AddControllers();
+      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestAPI", Version = "v1" }); });
+
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+      {
+        options.TokenValidationParameters ??= new TokenValidationParameters();
+        options.TokenValidationParameters.ValidIssuer = Configuration["JWT:Issuer"];
+        options.TokenValidationParameters.ValidateAudience = false;
+      });
+
+      services.AddTransient<IWeatherRepository, WeatherRepository>();
+      services.AddTransient<IWeatherForecastService, WeatherForecastService>();
+    }
+
+    #endregion
   }
 }

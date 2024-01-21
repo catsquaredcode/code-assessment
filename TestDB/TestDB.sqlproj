@@ -71,4 +71,7 @@
   <ItemGroup>
     <PostDeploy Include="Data\SeedData.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TestDB.publish.xml" />
+  </ItemGroup>
 </Project>
