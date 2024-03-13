@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Client, WeatherForecast} from "./weatherapp.swagger";
+import { Component } from '@angular/core';
+import { Client, WeatherForecast } from "./weatherapp.swagger";
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,10 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 })
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
+  title = "TestUI";
 
   constructor(
-    private client: Client
+    public client: Client
   ) {
     this.getWeather();
   }
@@ -23,7 +24,7 @@ export class AppComponent {
    */
   getWeather() {
     this.client.unauthenticated().subscribe({
-      complete: () => {},
+      complete: () => { },
       error: (error) => {
         this.handleError(error);
       },
@@ -31,6 +32,33 @@ export class AppComponent {
         this.weatherData = data;
       }
     })
+  }
+
+  getTempClass(summary: string | undefined) {
+
+    if (summary != undefined) {
+      switch (summary.toLowerCase()) {
+        case 'freezing':
+        case 'bracing':
+        case 'chilly':
+          return 'cyan-text';
+        case 'mild':
+        case 'balmy':
+        case 'cool':
+          return 'green-text';
+        case 'warm':
+        case 'hot':
+          return 'orange-text';
+        case 'sweltering':
+        case 'scorching':
+          return 'red-text';
+        default:
+          return '';
+      }
+    } else {
+      return '';
+    }
+
   }
 
 
