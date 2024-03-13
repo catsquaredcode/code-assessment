@@ -3,13 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppComponent } from './app.component';
 import { of, throwError } from 'rxjs';
+import { WeatherForecast } from './weatherapp.swagger';
 
-const weatherData = [
+const weatherData: WeatherForecast[] = [
   {
-    summary: 'Hot', 
+    date: new Date('2024-01-01'),
     temperatureC: 38, 
     temperatureF: 100, 
-    dateFormatted: '2024-01-01'
+    summary: 'Hot'
   }
 ];
 
@@ -43,6 +44,40 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const rendered = fixture.nativeElement as HTMLElement;
     expect(rendered.querySelector('.content span')?.textContent).toContain('TestUI app is running!');
+  });
+
+  describe('getWeatherSummaryColor', () => {
+
+    it('should return cyan for Freezing, Bracing, or Chilly', () => {
+
+      expect(app.getWeatherSummaryColor('Freezing')).toEqual('cyan');
+      expect(app.getWeatherSummaryColor('Bracing')).toEqual('cyan');
+      expect(app.getWeatherSummaryColor('Chilly')).toEqual('cyan');
+
+    });
+
+    it('should return green for Mild, Balmy, or Cool', () => {
+
+      expect(app.getWeatherSummaryColor('Mild')).toEqual('green');
+      expect(app.getWeatherSummaryColor('Balmy')).toEqual('green');
+      expect(app.getWeatherSummaryColor('Cool')).toEqual('green');
+
+    });
+
+    it('should return orange for Warm or Hot', () => {
+
+      expect(app.getWeatherSummaryColor('Warm')).toEqual('orange');
+      expect(app.getWeatherSummaryColor('Hot')).toEqual('orange');
+
+    });
+
+    it('should return red for Sweltering or Scorching', () => {
+
+      expect(app.getWeatherSummaryColor('Sweltering')).toEqual('red');
+      expect(app.getWeatherSummaryColor('Scorching')).toEqual('red');
+
+    });
+
   });
 
   describe('getWeather', () => {
