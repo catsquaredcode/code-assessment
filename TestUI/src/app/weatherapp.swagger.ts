@@ -134,6 +134,28 @@ export interface WeatherForecast {
   summary?: string | undefined;
 }
 
+export interface WeatherForecastPresentation {
+  date?: Date;
+  temperatureC?: number;
+  readonly temperatureF?: number;
+  summary?: string | undefined;
+  cssClass:string
+}
+
+export enum summaryCat{
+  FREEZING="Freezing",
+  BRACING="Bracing",
+  CHILLY="Chilly",
+  MILD="Mild",
+  BALMY="Balmy",
+  COOL="Cool",
+  WARM="Warm",
+  HOT="Hot",
+  SWELTERING="Sweltering",
+  SCORCHING="Scorching"
+}
+
+
 export class ApiException extends Error {
   override message: string;
   status: number;

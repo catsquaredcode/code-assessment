@@ -25,3 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Added Scripts for mocked start in local environment
+
+Run `npm run start-proxy-server` and `npm run start-proxy` in two separate terminals to start the application locally (mocked results are placed in sever.js).

@@ -1,0 +1,6 @@
+{
+    "/WeatherForecast/unauthenticated": {
+      "target": "http://localhost:5001",
+      "secure": false
+    }
+}
