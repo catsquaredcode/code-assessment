@@ -1,12 +1,17 @@
 <div class="container">
   <div class="row">
+    <div class="col-12 content">
+      <span>{{title}} app is running!</span>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-6 offset-3" *ngFor="let weather of weatherData">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">{{weather.date}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF}} &#176;F </h6>
-          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC}} &#176;C</h6>
-          <p class="card-text">{{weather.summary}}</p>
+          <h5 class="card-title">{{weather.date | date:'EEEE dd/MM/yyyy HH:mm a'}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureF | number:'1.0-0'}} &#176;F </h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{weather.temperatureC | number:'1.0-0'}} &#176;C</h6>
+          <p class="card-text" [ngClass]="getWeatherClass(weather.summary)">{{weather.summary}}</p>
         </div>
       </div>
     </div>
