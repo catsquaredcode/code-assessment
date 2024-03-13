@@ -5,7 +5,7 @@ import {Client, WeatherForecast, WeatherForecastPresentation, summaryCat} from "
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [Client]
+  //  providers: [Client] commented out, as it is apparently useless due to the fact that this same service is provided in the module, and it break tests.
 })
 export class AppComponent {
   weatherData: WeatherForecastPresentation[] = [];
@@ -50,7 +50,7 @@ export class AppComponent {
         case summaryCat.MILD:
         case summaryCat.BALMY:
         case summaryCat.COOL:
-          cssClass="Green"
+          cssClass="green"
           break;
         case summaryCat.WARM:
         case summaryCat.HOT:
