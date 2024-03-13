@@ -10,9 +10,12 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
 
+  title: string;
+
   constructor(
     private client: Client
   ) {
+    this.title = "TestUI";
     this.getWeather();
   }
 
@@ -42,5 +45,26 @@ export class AppComponent {
    */
   handleError(error: string) {
     alert(error);
+  }
+
+  getWeatherSummaryColor(summary: string): string {
+      switch (summary) {
+        case 'Freezing':
+        case 'Bracing':
+        case 'Chilly':
+          return 'cyan';
+        case 'Mild':
+        case 'Balmy':
+        case 'Cool':
+          return 'green';
+        case 'Warm':
+        case 'Hot':
+          return 'orange';
+        case 'Sweltering':
+        case 'Scorching':
+          return 'red';
+        default:
+          return 'black';
+      }
   }
 }
