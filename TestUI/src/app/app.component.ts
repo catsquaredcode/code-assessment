@@ -10,9 +10,12 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
 
+  title: string;
+
   constructor(
     private client: Client
   ) {
+    this.title = "TestUI";
     this.getWeather();
   }
 
