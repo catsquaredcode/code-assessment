@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  dateFormat: 'it',
+  production: true,
+  url:''
 };
