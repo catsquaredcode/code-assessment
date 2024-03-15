@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  dateFormat: 'it',
   production: false,
-  url:'https://localhost:5001'
+  url:'http://localhost:5000'
 };
 
 /*
