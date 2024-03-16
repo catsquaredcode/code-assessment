@@ -15,6 +15,28 @@ const BROWSER_LOCALE = new InjectionToken<string>('BROWSER_LOCALE');
   styleUrls: ['./weather.component.scss']
 })
 export class WeatherComponent {
+  //Note: i needed to move a clone of the component class here to be able to test it.
+  @Input() weather!: WeatherForecast;
+
+  //Note: The injection token is not available in the test environment, so i need to declare it here.
+  public get locale(): LocalesEnum {
+    return this._locale;
+  }
+  public set locale(value: LocalesEnum) {
+    this._locale = value;
+  }
+
+  private _locale: LocalesEnum = LocalesEnum.enUS;
+
+  public get format(): string {
+    return DateFormatsByLocale[this._locale];
+  }
+
+  public get summaryColorClass(): string {
+    const summaryAsType: WeathersTypesEnum = this.weather.summary as WeathersTypesEnum;
+    return SummariesColorsByWeatherType[summaryAsType];
+  }
+}
 
 describe('WeatherComponent', () => {
   let component: WeatherComponent;
@@ -32,12 +54,26 @@ describe('WeatherComponent', () => {
   });
 
   beforeEach(() => {
+    locale = TestBed.inject(BROWSER_LOCALE) as LocalesEnum;
     fixture = TestBed.createComponent(WeatherComponent);
     component = fixture.componentInstance;
+    component.weather = {
+      date: new Date(),
+      temperatureF: 87,
+      temperatureC: 31,
+      summary: "Hot"
+    };
+    component.locale = locale;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display the correct date format', () => {
+    const expectedDateFormat = DateFormatsByLocale[locale];
+    expect(component.format).toBe(expectedDateFormat);
+  });
+
 });
