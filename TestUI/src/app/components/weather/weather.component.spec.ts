@@ -76,4 +76,8 @@ describe('WeatherComponent', () => {
     expect(component.format).toBe(expectedDateFormat);
   });
 
+  it('should display the correct summary color class', () => {
+    const expectedColorClass = SummariesColorsByWeatherType[component.weather.summary as WeathersTypesEnum];
+    expect(component.summaryColorClass).toBe(expectedColorClass);
+  });
 });
