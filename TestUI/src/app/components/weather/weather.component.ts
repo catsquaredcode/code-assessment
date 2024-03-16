@@ -25,6 +25,17 @@ export class WeatherComponent {
     return DateFormatsByLocale[this._locale];
   }
 
+  /**
+  * Get the summary color based on the weather.
+  * 
+  * @returns The summary color class.
+  */
+  public get summaryColorClass(): string {
+    const summaryAsType: WeathersTypesEnum = this.weather.summary as WeathersTypesEnum;
+    //Note: Direct access in record has more performance than using a search in a list or a switch statement.
+    return SummariesColorsByWeatherType[summaryAsType];
+  }
+
   constructor(
     @Inject(BROWSER_LOCALE) private _locale: LocalesEnum,
   ) { }
