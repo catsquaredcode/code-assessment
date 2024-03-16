@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Client, WeatherForecast } from "./weatherapp.swagger";
+import { LocalesEnum } from './enums/locales.enum';
+import { BROWSER_LOCALE } from './app.module';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,7 @@ import { Client, WeatherForecast } from "./weatherapp.swagger";
   providers: [Client]
 })
 export class AppComponent {
-  
+
   public get weatherData(): WeatherForecast[] {
     return this._weatherData;
   }
@@ -16,6 +18,7 @@ export class AppComponent {
   private _weatherData: WeatherForecast[] = [];
 
   constructor(
+    @Inject(BROWSER_LOCALE) private _locale: LocalesEnum,
     private _client: Client
   ) {
     this.getWeather();
