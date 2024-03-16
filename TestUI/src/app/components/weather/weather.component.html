@@ -3,6 +3,6 @@
         <h5 class="card-title">{{ weather.date | date: format }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ weather.temperatureF }} &#176;F </h6>
         <h6 class="card-subtitle mb-2 text-muted">{{ weather.temperatureC }} &#176;C</h6>
-        <p class="card-text">{{ weather.summary }}</p>
+        <p class="card-text" [ngClass]="summaryColorClass">{{ weather.summary }}</p>
     </div>
 </div>
