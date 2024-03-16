@@ -3,6 +3,8 @@ import { Client, WeatherForecast } from "./weatherapp.swagger";
 import { LocalesEnum } from './enums/locales.enum';
 import { BROWSER_LOCALE } from './app.module';
 
+import { DateFormatsByLocale } from './consts/date-formats-by-locale.const';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,10 +13,24 @@ import { BROWSER_LOCALE } from './app.module';
 })
 export class AppComponent {
 
-  public get weatherData(): WeatherForecast[] {
+   /**
+   * Get the weather data.
+   * 
+   * @returns The weather data.
+   */
+   public get weatherData(): WeatherForecast[] {
     return this._weatherData;
   }
 
+  /**
+   * Get the date format based on the locale.
+   * 
+   * @returns The date format.
+   */
+  public get format(): string {
+    return DateFormatsByLocale[this._locale];
+  }
+  
   private _weatherData: WeatherForecast[] = [];
 
   constructor(
