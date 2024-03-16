@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Client, WeatherForecast} from "./weatherapp.swagger";
+import { Component } from '@angular/core';
+import { Client, WeatherForecast } from "./weatherapp.swagger";
 
 @Component({
   selector: 'app-root',
@@ -8,10 +8,15 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
   providers: [Client]
 })
 export class AppComponent {
-  weatherData: WeatherForecast[] = [];
+  
+  public get weatherData(): WeatherForecast[] {
+    return this._weatherData;
+  }
+
+  private _weatherData: WeatherForecast[] = [];
 
   constructor(
-    private client: Client
+    private _client: Client
   ) {
     this.getWeather();
   }
@@ -22,17 +27,16 @@ export class AppComponent {
    * @description Gets current weather from API
    */
   getWeather() {
-    this.client.unauthenticated().subscribe({
-      complete: () => {},
+    this._client.unauthenticated().subscribe({
+      complete: () => { },
       error: (error) => {
         this.handleError(error);
       },
       next: (data: WeatherForecast[]) => {
-        this.weatherData = data;
+        this._weatherData = data;
       }
     })
   }
-
 
   /**
    * Dummy Error Handler
