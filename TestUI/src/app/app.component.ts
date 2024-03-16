@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {Client, WeatherForecast} from "./weatherapp.swagger";
 
+type ColorDescription = 'Freezing' | 'Bracing' | 'Chilly' | 'Mild' | 'Balmy' | 'Cool' | 'Warm' | 'Hot' | 'Sweltering' | 'Scorching';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,6 +11,19 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
 })
 export class AppComponent {
   weatherData: WeatherForecast[] = [];
+  colorMap: Record<ColorDescription, string> = {
+    'Freezing': 'cyan',
+    'Bracing': 'cyan',
+    'Chilly': 'cyan',
+    'Mild': 'green',
+    'Balmy': 'green',
+    'Cool': 'green',
+    'Warm': 'orange',
+    'Hot': 'orange',
+    'Sweltering': 'red',
+    'Scorching': 'red'
+  };
+
 
   constructor(
     private client: Client
@@ -43,4 +58,16 @@ export class AppComponent {
   handleError(error: string) {
     alert(error);
   }
+
+  /**
+   * Get color based on weather description
+   *
+   * @param summary Weather summary
+   * @returns color string
+   */
+  getColor(summary: string | undefined): string {
+    const color = summary as ColorDescription;
+    return this.colorMap[color] || 'black'; // Default color
+  }
+
 }
