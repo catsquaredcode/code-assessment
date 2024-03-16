@@ -1,6 +1,5 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { API_BASE_URL, Client } from "./weatherapp.swagger";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
@@ -16,7 +15,6 @@ export const BROWSER_LOCALE = new InjectionToken<string>('BROWSER_LOCALE');
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule
   ],
   providers: [
