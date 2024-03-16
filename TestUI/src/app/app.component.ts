@@ -1,5 +1,9 @@
-import {Component} from '@angular/core';
-import {Client, WeatherForecast} from "./weatherapp.swagger";
+import { Component, Inject } from '@angular/core';
+import { Client, WeatherForecast } from "./weatherapp.swagger";
+import { LocalesEnum } from './enums/locales.enum';
+import { BROWSER_LOCALE } from './app.module';
+
+import { DateFormatsByLocale } from './consts/date-formats-by-locale.const';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +12,30 @@ import {Client, WeatherForecast} from "./weatherapp.swagger";
   providers: [Client]
 })
 export class AppComponent {
-  weatherData: WeatherForecast[] = [];
+
+   /**
+   * Get the weather data.
+   * 
+   * @returns The weather data.
+   */
+   public get weatherData(): WeatherForecast[] {
+    return this._weatherData;
+  }
+
+  /**
+   * Get the date format based on the locale.
+   * 
+   * @returns The date format.
+   */
+  public get format(): string {
+    return DateFormatsByLocale[this._locale];
+  }
+  
+  private _weatherData: WeatherForecast[] = [];
 
   constructor(
-    private client: Client
+    @Inject(BROWSER_LOCALE) private _locale: LocalesEnum,
+    private _client: Client
   ) {
     this.getWeather();
   }
@@ -22,17 +46,16 @@ export class AppComponent {
    * @description Gets current weather from API
    */
   getWeather() {
-    this.client.unauthenticated().subscribe({
-      complete: () => {},
+    this._client.unauthenticated().subscribe({
+      complete: () => { },
       error: (error) => {
         this.handleError(error);
       },
       next: (data: WeatherForecast[]) => {
-        this.weatherData = data;
+        this._weatherData = data;
       }
     })
   }
-
 
   /**
    * Dummy Error Handler
